@@ -14,7 +14,9 @@ const MainSection = () => {
   const currentIndex = languages.indexOf(language);
 
   const toggleLanguage = () => {
-    currentIndex === languages.length - 1 ? '' : '';
+    currentIndex === languages.length - 1
+      ? setLanguage(language[0])
+      : setLanguage(language[currentIndex + 1]);
   };
 
   return (
