@@ -305,3 +305,29 @@ bar();
 //   return `Index ${index}: ${num * num}`;
 // });
 // console.log(square);
+
+//! HOC [higher order components in react]
+
+// const HOC = (WrappedCOmponent) => {
+//   return (props) => {
+//     return <WrappedCOmponent {...props} />;
+//   };
+// };
+
+// const MyComponent = ({ msg }) => {
+//   return (
+//     <div>
+//       <h1>message: {msg}</h1>
+//     </div>
+//   );
+// };
+
+// const EnhancedComponent = HOC(MyComponent);
+
+// const App = () => {
+//   return (
+//     <div>
+//       <EnhancedComponent msg="hello from app" />
+//     </div>
+//   );
+// };
