@@ -24,3 +24,26 @@ First if you add up all the numbers, 6 + 9 + 2 + 8 + 7 you get 32. Then there ar
 Note: There's a slight discrepancy in the problem statement - it mentions adding 6+9+2+8+7=32 but the actual example "Hello6 9World 2, Nic8e D7ay!" should only count space-separated single digits (9, 2, 7), which would be 18, divided by 17 letters = 1.06 ≈ 1. The first example output shows 4, suggesting the numbers might be 6, 9, 2, 8, 7 after all.
 
 */
+
+function searching_challenge(str) {
+  // Extract all numbers (single digits)
+  const numbers = str.match(/\d/g) || [];
+
+  // Calculate sum of numbers
+  const sum = numbers.reduce((total, num) => total + parseInt(num), 0);
+
+  // Count letters (only a-zA-Z)
+  const letterCount = (str.match(/[a-zA-Z]/g) || []).length;
+
+  // Avoid division by zero
+  if (letterCount === 0) return 0;
+
+  // Calculate and round
+  const result = sum / letterCount;
+  return Math.round(result);
+}
+
+// Test cases
+console.log(searching_challenge('Hello6 9World 2, Nic8e D7ay!')); // 4
+console.log(searching_challenge('One Number*1*')); // 0
+console.log(searching_challenge('Hello6World 2, Nic8e D7ay!')); // 2
