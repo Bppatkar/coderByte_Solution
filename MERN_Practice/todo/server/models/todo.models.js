@@ -15,11 +15,14 @@ const todoSchema = mongoose.Schema(
       type: Boolean,
       required: true,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
-  { timeStamps: true }
+  { timestamps: true }
 );
-
-todoSchema.index({ title: 1 });
 
 const Todo = mongoose.model('Todo', todoSchema);
 export default Todo;
