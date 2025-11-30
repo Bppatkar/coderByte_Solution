@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import TodoPage from './pages/TodoPage';
+import TodoPage from './pages/TodoPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';

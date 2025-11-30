@@ -60,15 +60,35 @@ const TodoList = ({ todos, onDelete, onUpdate }) => {
               }}
             >
               <div style={{ flex: 1 }}>
-                <h3
+                <div
                   style={{
-                    margin: '0 0 0.5rem 0',
-                    textDecoration: todo.isActive ? 'none' : 'line-through',
-                    color: todo.isActive ? '#333' : '#999',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    marginBottom: '0.5rem',
                   }}
                 >
-                  {todo.title}
-                </h3>
+                  <h3
+                    style={{
+                      margin: 0,
+                      textDecoration: todo.isActive ? 'none' : 'line-through',
+                      color: todo.isActive ? '#333' : '#999',
+                    }}
+                  >
+                    {todo.title}
+                  </h3>
+                  <span
+                    style={{
+                      padding: '2px 8px',
+                      backgroundColor: '#e9ecef',
+                      borderRadius: '12px',
+                      fontSize: '0.75rem',
+                      color: '#495057',
+                    }}
+                  >
+                    {todo.category}
+                  </span>
+                </div>
                 <p
                   style={{
                     margin: '0 0 1rem 0',
@@ -77,6 +97,26 @@ const TodoList = ({ todos, onDelete, onUpdate }) => {
                 >
                   {todo.description}
                 </p>
+                {todo.file && (
+                  <div style={{ marginBottom: '0.5rem' }}>
+                    <a
+                      href={`${import.meta.env.VITE_API_BASE_URL.replace(
+                        '/api/v1',
+                        ''
+                      )}${todo.file}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: '#007bff',
+                        textDecoration: 'none',
+                        fontSize: '0.875rem',
+                      }}
+                    >
+                      📎 View Attachment
+                    </a>
+                  </div>
+                )}
+
                 <div
                   style={{
                     fontSize: '0.875rem',

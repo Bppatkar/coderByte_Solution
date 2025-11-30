@@ -10,9 +10,18 @@ const todoSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      enum: ['Work', 'Personal', 'Shopping', 'Health', 'Other'],
+      default: 'Other',
+    },
     isActive: {
       type: Boolean,
       required: true,
+    },
+    file: {
+      type: String,
+      default: null,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

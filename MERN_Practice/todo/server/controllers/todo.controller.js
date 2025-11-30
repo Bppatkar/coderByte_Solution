@@ -12,8 +12,14 @@ async function getAllTodos(req, res) {
 
 async function addTodo(req, res) {
   try {
-    const { title, description, isActive } = req.body;
-    if (!title || !description || !isActive === undefined) {
+    // console.log('🔍 DEBUG - Request file:', req.file);
+    // console.log('🔍 DEBUG - Request body:', req.body);
+
+    const { title, description, category, isActive } = req.body;
+
+    const attachmentPath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    if (!title || !description) {
       return res.status(404).json({ message: 'all fields are required' });
     }
     const existingTodo = await Todo.findOne({
@@ -24,11 +30,15 @@ async function addTodo(req, res) {
       return res.status(400).json({ message: 'Use other Title' });
     }
     const newTodo = await Todo.create({
-      title,
-      description,
-      isActive,
+      title: title.trim(),
+      description: description.trim(),
+      category: category || 'Other',
+      isActive: isActive !== undefined ? isActive : true,
+      file: attachmentPath,
       user: req.user,
     });
+
+    // console.log('✅ DEBUG - Todo created with file:', newTodo.file);
 
     return res.status(201).json({
       success: true,
@@ -60,6 +70,14 @@ async function getTodoById(req, res) {
 
 async function updateTodo(req, res) {
   try {
+    const { title, description, category, isActive } = req.body;
+
+    const updateFields = { title, description, category, isActive };
+
+    if (req.file) {
+      updateFields.file = `/uploads/${req.file.filename}`;
+    }
+
     const todo = await Todo.findOne({ _id: req.params.id, user: req.user });
     if (!todo) {
       return res.status(404).json({ message: 'Todo not found' });
@@ -88,9 +106,15 @@ async function updateTodo(req, res) {
 
     const newUpdatedTodo = await Todo.findOneAndUpdate(
       { _id: todo._id },
-      req.body,
+      updateFields,
       { new: true }
     );
+
+    if (!newUpdatedTodo) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'Todo not found or unauthorized' });
+    }
 
     return res.status(200).json({
       success: true,

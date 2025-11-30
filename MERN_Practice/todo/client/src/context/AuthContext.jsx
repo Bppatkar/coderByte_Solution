@@ -71,19 +71,17 @@ const AuthContextProvider = ({ children }) => {
           setToken(storedToken);
         } else {
           console.error('Invalid getMe response:', response.data);
+
           localStorage.removeItem('token');
           setToken(null);
           setUser(null);
         }
       } catch (error) {
         console.error('Token validation failed:', error);
-        console.error('Error details:', error.response?.data);
 
-        if (error.response?.status === 401 || error.response?.status === 403) {
-          localStorage.removeItem('token');
-          setToken(null);
-          setUser(null);
-        }
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
       } finally {
         setLoading(false);
       }

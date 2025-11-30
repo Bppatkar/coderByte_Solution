@@ -40,7 +40,20 @@ api.interceptors.response.use(
 export const todoApi = {
   getAllTodo: async () => api.get('/todos/'),
   getTodoById: async (id) => api.get(`/todos/${id}`),
-  addTodo: async (data) => api.post('/todos/add', data),
+  addTodo: async (data) => {
+    const token = localStorage.getItem('token');
+
+    // Creating a new axios instance for file uploads
+    const fileUploadApi = axios.create({
+      baseURL: import.meta.env.VITE_API_BASE_URL,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return fileUploadApi.post('/todos/add', data);
+  },
   updateTodo: async (id, data) => api.patch(`/todos/update/${id}`, data),
   deleteTodo: async (id) => api.delete(`/todos/delete/${id}`),
 };
@@ -69,9 +82,9 @@ export const authApi = {
 };
 
 export const userApi = {
-  getAllUser: async () => {},
-  searchUser: async () => {},
-  getProfile: async () => {},
+  getAllUser: async () => api.get('/users'),
+  searchUser: async (query) => api.get(`/users/search?q=${query}`),
+  getProfile: async (userId) => api.get(`/users/${userId}/profile`),
 };
 
 export default api;

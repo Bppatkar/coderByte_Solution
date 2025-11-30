@@ -50,7 +50,8 @@ const TodoPage = () => {
   const handleAddTodo = async (newTodo) => {
     try {
       const response = await todoApi.addTodo(newTodo);
-      setTodos((prev) => [response.data.newTodo, ...prev]);
+      // console.log('✅ Todo added response:', response.data);
+      setTodos((prev) => [...prev, response.data.newTodo]);
     } catch (error) {
       console.error('Error adding todo:', error);
       throw error;
